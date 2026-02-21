@@ -16,7 +16,7 @@ class BackgroundComponent extends PositionComponent
 
   @override
   Future<void> onLoad() async {
-    size = game.size;
+    size = game.virtualSize;
     anchor = Anchor.topLeft;
     position = Vector2.zero();
     priority = -1;

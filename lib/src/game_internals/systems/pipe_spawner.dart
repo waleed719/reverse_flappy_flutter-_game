@@ -29,8 +29,8 @@ class PipeSpawner extends Component with HasGameReference<MyGame> {
   }
 
   void _spawnPipe() {
-    final double screenH = game.size.y;
-    final double gapHeight = 200;
+    final double screenH = game.virtualSize.y;
+    final double gapHeight = 150;
 
     // Minimum pipe height on either side (ensures both pipes are always visible)
     final double minPipeHeight = screenH * 0.15;

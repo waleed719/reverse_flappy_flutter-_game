@@ -24,7 +24,7 @@ class Pipe extends PositionComponent
 
     final double topHeight = gapY - gapHeight / 2;
     final double bottomY = gapY + gapHeight / 2;
-    final double bottomHeight = game.size.y - bottomY;
+    final double bottomHeight = game.virtualSize.y - bottomY;
 
     // Calculate natural tile height from the sprite's aspect ratio
     final double spriteAspect = pipeSprite.srcSize.y / pipeSprite.srcSize.x;
@@ -48,8 +48,8 @@ class Pipe extends PositionComponent
 
     // --- Bottom pipe (tiled, normal) ---
     double bPos = bottomY;
-    while (bPos < game.size.y) {
-      final double remaining = game.size.y - bPos;
+    while (bPos < game.virtualSize.y) {
+      final double remaining = game.virtualSize.y - bPos;
       final double h = remaining < tileHeight ? remaining : tileHeight;
       add(
         SpriteComponent(
@@ -91,7 +91,7 @@ class Pipe extends PositionComponent
     position.x += game.worldSpeed * dt;
 
     // Remove when off-screen to the right
-    if (position.x > game.size.x + 60) {
+    if (position.x > game.virtualSize.x + 60) {
       removeFromParent();
     }
 

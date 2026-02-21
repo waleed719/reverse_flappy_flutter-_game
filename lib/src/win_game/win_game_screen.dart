@@ -5,8 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../ads/ads_controller.dart';
 import '../ads/banner_ad_widget.dart';
-import '../games_services/score.dart';
-import '../in_app_purchase/in_app_purchase.dart';
+import '../player_progress/score.dart';
 import '../player_progress/player_progress.dart';
 import '../style/juicy_button.dart';
 import '../style/palette.dart';
@@ -19,8 +18,6 @@ class WinGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final adsControllerAvailable = context.watch<AdsController?>() != null;
-    final adsRemoved =
-        context.watch<InAppPurchaseController?>()?.adRemoval.active ?? false;
     final palette = context.watch<Palette>();
 
     final topScores = context.watch<PlayerProgress>().topScores;
@@ -79,7 +76,7 @@ class WinGameScreen extends StatelessWidget {
                           color: palette.primaryCyan,
                         ),
                       ),
-                      if (adsControllerAvailable && !adsRemoved) ...[
+                      if (adsControllerAvailable) ...[
                         const SizedBox(height: 16),
                         const SizedBox(
                           height: 60,

@@ -17,7 +17,7 @@ class Player extends SpriteComponent
     sprite = await game.loadSprite('player.png');
     size = Vector2(64, 64);
     anchor = Anchor.center;
-    position = Vector2(game.size.x - 80, game.size.y / 2);
+    position = Vector2(game.virtualSize.x - 80, game.virtualSize.y / 2);
     add(RectangleHitbox());
   }
 
@@ -37,8 +37,8 @@ class Player extends SpriteComponent
       position.y = 0;
       velocity = 0;
     }
-    if (position.y > game.size.y - size.y) {
-      position.y = game.size.y - size.y;
+    if (position.y > game.virtualSize.y - size.y / 2) {
+      position.y = game.virtualSize.y - size.y / 2;
       velocity = 0;
     }
   }

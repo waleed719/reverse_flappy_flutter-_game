@@ -153,7 +153,7 @@ class SettingsScreen extends StatelessWidget {
                               onTap: () => showCustomNameDialog(context),
                               trailing: ValueListenableBuilder(
                                 valueListenable: settings.playerName,
-                                builder: (_, name, __) => Text(
+                                builder: (_, name, _) => Text(
                                   name,
                                   style: GoogleFonts.beVietnamPro(
                                     fontSize: 14,
@@ -309,7 +309,11 @@ class _JuicyToggleRow extends StatelessWidget {
               ],
             ),
           ),
-          Switch(value: value, onChanged: onChanged, activeColor: activeColor),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+            activeThumbColor: activeColor,
+          ),
         ],
       ),
     );
@@ -352,13 +356,12 @@ class _ActionRow extends StatelessWidget {
                 ),
               ),
             ),
-            if (trailing != null) trailing!,
-            const SizedBox(width: 4),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: palette.textDark.withAlpha(80),
-              size: 20,
-            ),
+            trailing ??
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: palette.textDark.withAlpha(80),
+                  size: 20,
+                ),
           ],
         ),
       ),

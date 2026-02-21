@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:reverse_flappy/src/main_menu/widgets/floating_circle_button.dart';
+import 'package:reverse_flappy/src/main_menu/widgets/hills_painter.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
-import '../games_services/games_services.dart';
+
 import '../settings/settings.dart';
 import '../style/juicy_button.dart';
 import '../style/palette.dart';
@@ -16,7 +18,7 @@ class MainMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
-    final gamesServicesController = context.watch<GamesServicesController?>();
+
     final settingsController = context.watch<SettingsController>();
     final audioController = context.watch<AudioController>();
 
@@ -38,7 +40,7 @@ class MainMenuScreen extends StatelessWidget {
                 right: 0,
                 bottom: 0,
                 height: 100,
-                child: CustomPaint(painter: _HillsPainter(palette)),
+                child: CustomPaint(painter: HillsPainter(palette)),
               ),
 
               // Settings gear — top right
@@ -129,7 +131,7 @@ class MainMenuScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'v1.0.4 — beta',
+                            'v1.0.0',
                             style: GoogleFonts.beVietnamPro(
                               fontSize: 12,
                               color: palette.textDark.withAlpha(120),
@@ -169,10 +171,7 @@ class MainMenuScreen extends StatelessWidget {
                             fontSize: 18,
                             height: 58,
                             onPressed: () {
-                              GoRouter.of(context).push('./scoreboard');
-                              // if (gamesServicesController != null) {
-                              //   gamesServicesController.showLeaderboard();
-                              // }
+                              GoRouter.of(context).push('/scoreboard');
                             },
                           ),
                           const SizedBox(height: 20),
@@ -180,14 +179,14 @@ class MainMenuScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              _FloatingCircleButton(
+                              FloatingCircleButton(
                                 icon: Icons.shopping_cart_rounded,
                                 color: palette.cardWhite,
                                 iconColor: palette.textDark,
                                 onPressed: () {},
                               ),
                               const SizedBox(width: 14),
-                              _FloatingCircleButton(
+                              FloatingCircleButton(
                                 icon: Icons.share_rounded,
                                 color: palette.cardWhite,
                                 iconColor: palette.textDark,
@@ -207,92 +206,4 @@ class MainMenuScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Small circular floating button (Store, Share)
-class _FloatingCircleButton extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-  final Color iconColor;
-  final VoidCallback? onPressed;
-
-  const _FloatingCircleButton({
-    required this.icon,
-    required this.color,
-    required this.iconColor,
-    this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      shape: const CircleBorder(),
-      elevation: 3,
-      child: InkWell(
-        onTap: onPressed,
-        customBorder: const CircleBorder(),
-        child: SizedBox(
-          width: 48,
-          height: 48,
-          child: Center(child: Icon(icon, color: iconColor, size: 22)),
-        ),
-      ),
-    );
-  }
-}
-
-/// Custom painter for green hill silhouettes at the bottom of main menu.
-class _HillsPainter extends CustomPainter {
-  final Palette palette;
-
-  _HillsPainter(this.palette);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Back hill
-    final backPaint = Paint()..color = palette.hillGreen.withAlpha(180);
-    final backPath = Path()
-      ..moveTo(0, size.height * 0.6)
-      ..quadraticBezierTo(
-        size.width * 0.25,
-        size.height * 0.1,
-        size.width * 0.5,
-        size.height * 0.5,
-      )
-      ..quadraticBezierTo(
-        size.width * 0.75,
-        size.height * 0.9,
-        size.width,
-        size.height * 0.3,
-      )
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-    canvas.drawPath(backPath, backPaint);
-
-    // Front hill
-    final frontPaint = Paint()..color = palette.groundGreen;
-    final frontPath = Path()
-      ..moveTo(0, size.height * 0.8)
-      ..quadraticBezierTo(
-        size.width * 0.3,
-        size.height * 0.3,
-        size.width * 0.6,
-        size.height * 0.7,
-      )
-      ..quadraticBezierTo(
-        size.width * 0.85,
-        size.height * 1.0,
-        size.width,
-        size.height * 0.6,
-      )
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-    canvas.drawPath(frontPath, frontPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

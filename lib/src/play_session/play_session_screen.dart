@@ -12,9 +12,7 @@ import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
 import '../game_internals/my_game.dart';
 import '../game_internals/level_state.dart';
-import '../games_services/games_services.dart';
-import '../games_services/score.dart';
-import '../in_app_purchase/in_app_purchase.dart';
+import '../player_progress/score.dart';
 import '../level_selection/levels.dart';
 import '../player_progress/player_progress.dart';
 import '../style/confetti.dart';
@@ -171,7 +169,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     super.initState();
 
     _startOfPlay = DateTime.now();
-    _myGame = MyGame();
+    final audioController = context.read<AudioController>();
+    _myGame = MyGame(audioController: audioController);
 
     // Wire up the game-over callback to navigate to the score screen
     _myGame.onGameOver = _onGameOver;
@@ -181,13 +180,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
       if (mounted) setState(() {});
     });
 
-    // Preload ad for the win screen.
-    final adsRemoved =
-        context.read<InAppPurchaseController?>()?.adRemoval.active ?? false;
-    if (!adsRemoved) {
-      final adsController = context.read<AdsController?>();
-      adsController?.preloadAd();
-    }
+    final adsController = context.read<AdsController?>();
+    adsController?.preloadAd();
   }
 
   @override
@@ -252,20 +246,6 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
     final audioController = context.read<AudioController>();
     audioController.playSfx(SfxType.congrats);
-
-    // final gamesServicesController = context.read<GamesServicesController?>();
-    // if (gamesServicesController != null) {
-    //   // Award achievement.
-    //   if (widget.level.awardsAchievement) {
-    //     await gamesServicesController.awardAchievement(
-    //       android: widget.level.achievementIdAndroid!,
-    //       iOS: widget.level.achievementIdIOS!,
-    //     );
-    //   }
-
-    //   // Send score to leaderboard.
-    //   await gamesServicesController.submitLeaderboardScore(score);
-    // }
 
     playerProgress.addScore(score);
 

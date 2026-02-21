@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import '../games_services/score.dart';
+import 'score.dart';
 import 'persistence/player_progress_persistence.dart';
 
 /// Encapsulates the player's progress.
@@ -15,7 +15,7 @@ class PlayerProgress extends ChangeNotifier {
 
   final PlayerProgressPersistence _store;
 
-  int _highestLevelReached = 0;
+  // int _highestLevelReached = 0;
 
   /// Creates an instance of [PlayerProgress] backed by an injected
   /// persistence [store].
@@ -23,19 +23,19 @@ class PlayerProgress extends ChangeNotifier {
   List<Score> _topScores = [];
 
   /// The highest level that the player has reached so far.
-  int get highestLevelReached => _highestLevelReached;
+  // int get highestLevelReached => _highestLevelReached;
 
   List<Score> get topScores => List.unmodifiable(_topScores);
 
   /// Fetches the latest data from the backing persistence store.
-  Future<void> getLatestFromStore() async {
-    final level = await _store.getHighestLevelReached();
-    if (level > _highestLevelReached) {
-      _highestLevelReached = level;
-      notifyListeners();
-    } else if (level < _highestLevelReached) {
-      await _store.saveHighestLevelReached(_highestLevelReached);
-    }
+  Future<void> getLatestScores() async {
+    // final level = await _store.getHighestLevelReached();
+    // if (level > _highestLevelReached) {
+    //   _highestLevelReached = level;
+    //   notifyListeners();
+    // } else if (level < _highestLevelReached) {
+    //   await _store.saveHighestLevelReached(_highestLevelReached);
+    // }
 
     final encodedScore = await _store.getTopScores();
     _topScores = encodedScore
@@ -49,10 +49,10 @@ class PlayerProgress extends ChangeNotifier {
   /// Resets the player's progress so it's like if they just started
   /// playing the game for the first time.
   void reset() {
-    _highestLevelReached = 0;
+    // _highestLevelReached = 0;
     _topScores.clear();
     notifyListeners();
-    _store.saveHighestLevelReached(_highestLevelReached);
+    // _store.saveHighestLevelReached(_highestLevelReached);
     _store.saveTopScores([]);
   }
 
@@ -61,12 +61,12 @@ class PlayerProgress extends ChangeNotifier {
   /// If this is higher than [highestLevelReached], it will update that
   /// value and save it to the injected persistence store.
   void setLevelReached(int level) {
-    if (level > _highestLevelReached) {
-      _highestLevelReached = level;
-      notifyListeners();
+    // if (level > _highestLevelReached) {
+    //   _highestLevelReached = level;
+    //   notifyListeners();
 
-      unawaited(_store.saveHighestLevelReached(level));
-    }
+    //   unawaited(_store.saveHighestLevelReached(level));
+    // }
   }
 
   void addScore(Score score) {
