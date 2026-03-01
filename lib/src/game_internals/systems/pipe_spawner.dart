@@ -6,7 +6,7 @@ import '../components/pipe.dart';
 import '../my_game.dart';
 
 class PipeSpawner extends Component with HasGameReference<MyGame> {
-  final double spawnInterval = 3.5; // seconds
+  double get spawnInterval => game.gamelevel.spawnInterval; // seconds
   double _timer = 0;
 
   final Random _random = Random();
@@ -30,7 +30,7 @@ class PipeSpawner extends Component with HasGameReference<MyGame> {
 
   void _spawnPipe() {
     final double screenH = game.virtualSize.y;
-    final double gapHeight = 150;
+    final double gapHeight = game.gamelevel.pipeGapHeight;
 
     // Minimum pipe height on either side (ensures both pipes are always visible)
     final double minPipeHeight = screenH * 0.15;

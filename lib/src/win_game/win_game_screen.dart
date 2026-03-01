@@ -194,7 +194,9 @@ class WinGameScreen extends StatelessWidget {
                             shadowColor: palette.buttonGreenShadow,
                             fontSize: 18,
                             height: 56,
-                            onPressed: () => GoRouter.of(context).go('/play'),
+                            onPressed: () => GoRouter.of(
+                              context,
+                            ).go('/play/session/${score.level}'),
                           ),
                         ],
                       ),

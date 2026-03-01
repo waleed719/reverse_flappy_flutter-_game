@@ -58,6 +58,9 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/forest_pipe/
+    - assets/images/frost_pipe/
+    - assets/images/lava_pipe/
     - assets/music/
     - assets/sfx/
 

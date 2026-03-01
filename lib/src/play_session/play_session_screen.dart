@@ -170,7 +170,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
     _startOfPlay = DateTime.now();
     final audioController = context.read<AudioController>();
-    _myGame = MyGame(audioController: audioController);
+    final game = widget.level;
+    _myGame = MyGame(audioController: audioController, gamelevel: game);
 
     // Wire up the game-over callback to navigate to the score screen
     _myGame.onGameOver = _onGameOver;

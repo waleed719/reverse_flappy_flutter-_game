@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:reverse_flappy/src/level_selection/level_selection_screen.dart';
 import 'package:reverse_flappy/src/level_selection/levels.dart';
 import 'package:reverse_flappy/src/main_menu/main_menu_screen.dart';
 import 'package:reverse_flappy/src/play_session/play_session_screen.dart';
@@ -21,11 +22,8 @@ final router = GoRouter(
           path: 'play',
           pageBuilder: (context, state) => buildMyTransition<void>(
             key: UniqueKey(),
-            child: PlaySessionScreen(
-              gameLevels.first,
-              key: const Key('play session'),
-            ),
-            color: context.watch<Palette>().backgroundPlaySession,
+            child: const LevelSelectionScreen(key: Key('level selection')),
+            color: context.watch<Palette>().backgroundLevelSelection,
           ),
           routes: [
             GoRoute(

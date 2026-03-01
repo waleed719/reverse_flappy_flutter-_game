@@ -4,18 +4,18 @@ import '../my_game.dart';
 
 class BackgroundComponent extends PositionComponent
     with HasGameReference<MyGame> {
-  final List<String> scenes = ["world1.png", "world2.png"];
   late List<Sprite> _loadedSprites;
 
   late SpriteComponent _bg1;
   late SpriteComponent _bg2;
 
   int _sceneIndex = 0;
-  final double _scrollSpeed = 150;
+  double get _scrollSpeed => game.gamelevel.baseVelocity;
   final double overlap = 0.5;
 
   @override
   Future<void> onLoad() async {
+    final List<String> scenes = game.gamelevel.backgroundSprites;
     size = game.virtualSize;
     anchor = Anchor.topLeft;
     position = Vector2.zero();

@@ -51,7 +51,7 @@ Future<void> main() async {
     DeviceOrientation.landscapeRight,
   ]);
 
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  // await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   // TODO: To enable Firebase Crashlytics, uncomment the following line.
   // See the 'Crashlytics' section of the main README.md file for details.
@@ -78,7 +78,7 @@ Future<void> main() async {
   // }
 
   _log.info('Going full screen');
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   // TODO: When ready, uncomment the following lines to enable integrations.
   //       Read the README for more info on each integration.

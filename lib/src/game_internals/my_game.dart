@@ -10,12 +10,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:reverse_flappy/src/audio/audio_controller.dart';
 import 'package:reverse_flappy/src/audio/sounds.dart';
+import 'package:reverse_flappy/src/level_selection/levels.dart';
 
 import 'game_world.dart';
 import 'systems/camera_shake.dart';
 
 class MyGame extends FlameGame
     with TapCallbacks, KeyboardEvents, HasCollisionDetection {
+  final GameLevel gamelevel;
   final AudioController audioController;
   late final GameWorld myworld;
   late final CameraComponent cameraComponent;
@@ -27,7 +29,7 @@ class MyGame extends FlameGame
 
   Vector2 get virtualSize => size / cameraComponent.viewfinder.zoom;
 
-  MyGame({required this.audioController});
+  MyGame({required this.audioController, required this.gamelevel});
 
   /// Callback that the Flutter widget layer sets so we can
   /// notify it when the game ends (e.g. to navigate to a score screen).
